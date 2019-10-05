@@ -1,5 +1,5 @@
 from random import random, randint, choice
-select_player = [1,2]
+select_player = [1, 2]
 
 class Mancala:
     def __init__(self, state, player):
@@ -88,8 +88,8 @@ class Mancala:
                 return 1
 
     def terminal_state(self):
-        if(self.state[0] + self.state[1] + self.state[2] + self.state[3] + self.state[4] + self.state[5] == 0 \
-            or self.state[7] + self.state[8] + self.state[9] + self.state[10] + self.state[11] + self.state[12] == 0):
+        if(self.state[0] + self.state[1] + self.state[2] + self.state[3] + self.state[4] + self.state[5] == 0
+        or self.state[7] + self.state[8] + self.state[9] + self.state[10] + self.state[11] + self.state[12] == 0):
 
             #quien termina el juego no es revisado bajo este pensamiento y por lo tanto se agregan los beads de cada jugador a su score aunque
             self.state[6] = self.state[6] + self.state[0] + self.state[1] + self.state[2] + self.state[3] + self.state[4] + self.state[5]
@@ -166,10 +166,10 @@ else:
     print("its a draw")
 
 
-        
-        
-        
+
+
+
 #print(game.state)
 #print(game.player)
 #game.valid_moves([4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0],1)
-        
+

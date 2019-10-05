@@ -46,11 +46,11 @@ class Mancala:
                     self.state[scyther] = self.state[scyther] + 1
                     # subcaso el ultimo bead cae una casilla vacia
                     # se añaden el ultimo bead del jugador y los beads del enemigo a score del jugador
-                if ((final_position) % 12 < 6 and self.state[final_position] == 1):
-                    mirror = 12 - final_position
+                if ((final_position) % 13 < 6 and self.state[final_position] == 1):
+                    mirror = 12 - (final_position % 13)
                     self.state[6] = self.state[6] + self.state[mirror] + 1
                     self.state[mirror] = 0
-                    self.state[final_position] = 0
+                    self.state[final_position % 13] = 0
                 return 2
         else:
             if (final_position) % 13 == 0:
@@ -81,10 +81,10 @@ class Mancala:
                     # subcaso el ultimo bead cae una casilla vacia
                     # se añaden el ultimo bead del jugador y los beads del enemigo a score del jugador
                 if ((final_position) % 13 > 6 and self.state[final_position] == 1):
-                    mirror = 12 - final_position
+                    mirror = 12 - (final_position % 13)
                     self.state[13] = self.state[13] + self.state[mirror] + 1
                     self.state[mirror] = 0
-                    self.state[final_position] = 0
+                    self.state[final_position % 13] = 0
                 return 1
 
     def terminal_state(self):
@@ -99,22 +99,22 @@ class Mancala:
             self.state[7] = self.state[8] = self.state[9] = self.state[10] = self.state[11] = self.state[12] = 0
             self.finish = True
 
-#game = Mancala([4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0], 1)
+game = Mancala([4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0], 1)
 
 #revisar que llevar todos a 0 termina el juego para los jugadores
 #expect p1 victory
-game = Mancala([0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0], 1)
+#game = Mancala([0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0], 1)
 #pass
 #expect p2 victory
-game = Mancala([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0], 1)
+#game = Mancala([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0], 1)
 #expect draw
-game = Mancala([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0], 1)
+#game = Mancala([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0], 1)
 #revisar que no se saltee la penultima posicion del otro jugador
-game = Mancala([0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 0], 1)
+#game = Mancala([0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 0], 1)
 #turno extra p1
-game = Mancala([0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0], 1)
+#game = Mancala([0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0], 1)
 #turno extra p2
-game = Mancala([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0], 1)
+#game = Mancala([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0], 1)
 
 #all tests passed
 
@@ -133,7 +133,12 @@ while game.finish == False:
         if(human == 1):
             print("player turn")
             decision = int(input("what is your move?: "))
-            game.player = game.make_move(decision)
+            referee = game.valid_moves()
+            if decision in referee:
+                game.player = game.make_move(decision)
+            else:
+                print("invalid move")
+                continue
         else:
             print("bot is making a choice")
             game.player = 2
@@ -141,7 +146,12 @@ while game.finish == False:
         if(human == 2):
             print("player turn")
             decision = int(input("what is your move?: "))
-            game.player = game.make_move(decision)
+            referee = game.valid_moves()
+            if decision in referee:
+                game.player = game.make_move(decision)
+            else:
+                print("invalid move")
+                continue
 
         else:
             print("bot is making a move...")

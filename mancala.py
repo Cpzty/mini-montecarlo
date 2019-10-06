@@ -72,7 +72,7 @@ class Mancala:
                 self.state[move] = 0
                 self.patch = 0
                 for i in range(1, beads + 1):
-                    scyther = (move + i + self.patch) % 13
+                    scyther = (move + i + self.patch) % 14
                     if scyther != 6:
                         self.state[scyther] = self.state[scyther] + 1
                     else:
@@ -80,8 +80,8 @@ class Mancala:
                         self.patch = self.patch + 1
                     # subcaso el ultimo bead cae una casilla vacia
                     # se añaden el ultimo bead del jugador y los beads del enemigo a score del jugador
-                if ((final_position) % 13 > 6 and self.state[final_position] == 1):
-                    mirror = 12 - (final_position % 13)
+                if ((final_position) % 14 > 6 and self.state[final_position] == 1):
+                    mirror = 12 - (final_position % 14)
                     self.state[13] = self.state[13] + self.state[mirror] + 1
                     self.state[mirror] = 0
                     self.state[final_position % 13] = 0

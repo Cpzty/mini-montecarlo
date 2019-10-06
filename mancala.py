@@ -18,7 +18,7 @@ class Mancala:
             for i in range(7, 13):
                 if(self.state[i] !=0):
                     moves.append(i)
-        print(moves)
+        #print(moves)
         return moves
 
     def make_move(self, move):
@@ -99,6 +99,18 @@ class Mancala:
             self.state[7] = self.state[8] = self.state[9] = self.state[10] = self.state[11] = self.state[12] = 0
             self.finish = True
 
+def print_game(state, player):  
+    if(player == 2):
+        print("\n")
+        print("|", state[6], "| ", state[0:6])
+        print(state[7:13], " |", state[13], "|")
+        print("\n") 
+    else:
+        print("\n")
+        print( "|", state[13], "| ", state[12], " ", state[11], " ", state[10], " ", state[9], " ", state[8], " ", state[7])
+        print(state[0:6], " |", state[6], "|")
+        print("\n") 
+
 game = Mancala([4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0], 1)
 
 #revisar que llevar todos a 0 termina el juego para los jugadores
@@ -128,11 +140,12 @@ print("player turn: "+str(human))
 print("bot turn: "+str(bot))
 
 while game.finish == False:
-    print(game.state)
+    print_game(game.state, human)
+    #print(game.state)
     if game.player == 1:
         if(human == 1):
             print("player turn")
-            decision = int(input("what is your move?: "))
+            decision = int(input("what is your move? (0-5): "))
             referee = game.valid_moves()
             if decision in referee:
                 game.player = game.make_move(decision)
@@ -145,7 +158,7 @@ while game.finish == False:
     else:
         if(human == 2):
             print("player turn")
-            decision = int(input("what is your move?: "))
+            decision = int(input("what is your move? (7-12): "))
             referee = game.valid_moves()
             if decision in referee:
                 game.player = game.make_move(decision)

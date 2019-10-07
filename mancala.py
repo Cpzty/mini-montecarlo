@@ -84,7 +84,7 @@ class Mancala:
                     mirror = 12 - (final_position % 14)
                     self.state[13] = self.state[13] + self.state[mirror] + 1
                     self.state[mirror] = 0
-                    self.state[final_position % 13] = 0
+                    self.state[final_position % 14] = 0
                 return 1
 
     def terminal_state(self):

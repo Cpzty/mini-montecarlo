@@ -165,11 +165,11 @@ class Mancala:
     def montecarlo_search_tree(self):
         temp_state = deepcopy(self.state)
         count7 = count8 = count9 = count10 = count11 = count12 = 0
-        juego_termino = False
         jugadas_validas = self.valid_moves(self.state)
         for i in range(len(jugadas_validas)):
             #refresh state after each option is completed
             self.fake_state = deepcopy(temp_state)
+            juego_termino = False
             for j in range(1000):
                 while juego_termino == False:
 
@@ -275,7 +275,9 @@ while game.finish == False:
     else:
         print("bot is making a choice")
         monte = game.montecarlo_search_tree()
+        print(monte)
         bot_choice = monte.index(max(monte)) + 7
+        print(monte)
         game.player = game.make_move(bot_choice)
     # else:
     #     if(human == 2):

@@ -279,20 +279,22 @@ while game.finish == False:
     else:
         print("bot is making a choice")
         monte = game.montecarlo_search_tree(10000)
+        game.player = 2
         print("monte antes",monte)
         if(max(monte) == 0):
             for i in range(len(monte)):
                 if monte[i] == 0:
-                    monte[i] = randint(1, 10)
+                    monte[i] = float("-inf")
         print("monte despues", monte)
         #print("monte2 ",monte)
         bot_choice = monte.index(max(monte)) + 7
-        #referee = game.valid_moves(game.state)
-        #if bot_choice in referee:
-        game.player = game.make_move(bot_choice)
-        #else:
-        #    print("invalid move")
-        #    continue
+        print("bot choice", bot_choice)
+        referee = game.valid_moves(game.state)
+        if bot_choice in referee:
+            game.player = game.make_move(bot_choice)
+        else:
+            print("invalid move")
+            continue
     # else:
     #     if(human == 2):
     #         print("player turn")

@@ -50,7 +50,7 @@ class Mancala:
                     self.state[scyther] = self.state[scyther] + 1
                     # subcaso el ultimo bead cae una casilla vacia
                     # se añaden el ultimo bead del jugador y los beads del enemigo a score del jugador
-                if ((final_position) % 13 < 6 and self.state[final_position] == 1):
+                if ((final_position) % 13 < 6 and self.state[final_position % 13] == 1):
                     mirror = 12 - (final_position % 13)
                     self.state[6] = self.state[6] + self.state[mirror] + 1
                     self.state[mirror] = 0
@@ -176,7 +176,11 @@ class Mancala:
             for j in range(n):
                 self.fake_state = deepcopy(temp_state)
                 juego_termino = False
+                once = False
                 while juego_termino == False:
+                    if once == False: 
+                        once = True
+                        self.make_move_fake(jugadas_validas[i], self.fake_state)
                     bot1_moves = self.valid_moves(self.fake_state)
                     self.make_move_fake(choice(bot1_moves), self.fake_state)
                     if self.player == 1:
@@ -275,10 +279,17 @@ while game.finish == False:
     else:
         print("bot is making a choice")
         monte = game.montecarlo_search_tree(10000)
-        #print(monte)
+        #print("monte ",monte)
+        if(max(monte) == 0): 
+            monte[monte.index(max(monte))] = -10000
+        #print("monte2 ",monte)
         bot_choice = monte.index(max(monte)) + 7
-        #print(monte)
+        #referee = game.valid_moves(game.state)
+        #if bot_choice in referee:
         game.player = game.make_move(bot_choice)
+        #else:
+        #    print("invalid move")
+        #    continue
     # else:
     #     if(human == 2):
     #         print("player turn")

@@ -84,7 +84,7 @@ class Mancala:
                         self.patch = self.patch + 1
                     # subcaso el ultimo bead cae una casilla vacia
                     # se añaden el ultimo bead del jugador y los beads del enemigo a score del jugador
-                if ((final_position) % 14 > 6 and self.state[final_position] == 1):
+                if ((final_position) % 14 > 6 and self.state[final_position % 14] == 1):
                     mirror = 12 - (final_position % 14)
                     self.state[13] = self.state[13] + self.state[mirror] + 1
                     self.state[mirror] = 0
@@ -116,7 +116,7 @@ class Mancala:
                     self.fake_state[scyther] = self.fake_state[scyther] + 1
                     # subcaso el ultimo bead cae una casilla vacia
                     # se añaden el ultimo bead del jugador y los beads del enemigo a score del jugador
-                if ((final_position) % 14 < 6 and self.fake_state[final_position] == 1):
+                if ((final_position) % 13 < 6 and self.fake_state[final_position % 13] == 1):
                     mirror = 12 - (final_position % 13)
                     self.fake_state[6] = self.fake_state[6] + self.fake_state[mirror] + 1
                     self.fake_state[mirror] = 0
@@ -162,27 +162,27 @@ class Mancala:
 
 
     # montecarlo
-    def montecarlo_search_tree(self):
+    def montecarlo_search_tree(self, n):
         temp_state = deepcopy(self.state)
-        count7 = count8 = count9 = count10 = count11 = count12 = 0
+        count7 = 0
+        count8 = 0
+        count9 = 0
+        count10 = 0
+        count11 = 0
+        count12 = 0
         jugadas_validas = self.valid_moves(self.state)
         for i in range(len(jugadas_validas)):
             #refresh state after each option is completed
-            self.fake_state = deepcopy(temp_state)
-            juego_termino = False
-            for j in range(1000):
+            for j in range(n):
+                self.fake_state = deepcopy(temp_state)
+                juego_termino = False
                 while juego_termino == False:
-
-                        # if(human == 1):
-                        #decision = int(input("what is your move? (0-5): "))
                     bot1_moves = self.valid_moves(self.fake_state)
                     self.make_move_fake(choice(bot1_moves), self.fake_state)
                     if self.player == 1:
                         self.player = 2
                     else:
                         self.player = 1
-                    #print(self.player)
-                    print(self.valid_moves(self.fake_state))
                     juego_termino = self.terminal_state_fake(self.fake_state)
                 if(jugadas_validas[i] == 7):
                     if(self.fake_state[13] > self.fake_state[6]):
@@ -274,10 +274,10 @@ while game.finish == False:
             continue
     else:
         print("bot is making a choice")
-        monte = game.montecarlo_search_tree()
-        print(monte)
+        monte = game.montecarlo_search_tree(10000)
+        #print(monte)
         bot_choice = monte.index(max(monte)) + 7
-        print(monte)
+        #print(monte)
         game.player = game.make_move(bot_choice)
     # else:
     #     if(human == 2):
@@ -294,7 +294,7 @@ while game.finish == False:
     #         print("bot is making a move...")
     #         game.player = 1
     game.terminal_state()
-print(game.state)
+#print(game.state)
 if(game.state[6] > game.state[13]):
     print("p1 won")
 elif(game.state[13] > game.state[6]):
@@ -302,11 +302,6 @@ elif(game.state[13] > game.state[6]):
 else:
     print("its a draw")
 
-
-
-
-
 #print(game.state)
 #print(game.player)
 #game.valid_moves([4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0],1)
-

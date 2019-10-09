@@ -280,8 +280,8 @@ while game.finish == False:
         print("bot is making a choice")
         monte = game.montecarlo_search_tree(20000)
         print("monte ",monte)
-        #if(max(monte) == 0):
-            #monte[monte.index(max(monte))] = -10000
+        if(max(monte) == 0):
+            monte[monte.index(max(monte))] = -10000
         #print("monte2 ",monte)
         bot_choice = monte.index(max(monte)) + 7
         #referee = game.valid_moves(game.state)
